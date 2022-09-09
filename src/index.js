@@ -1,8 +1,8 @@
-(()=>{
+(() => {
 
-    const styleTag = document.createElement('style')
-    styleTag.type='text/css';
-    styleTag.textContent = `
+  const styleTag = document.createElement('style')
+  styleTag.type = 'text/css';
+  styleTag.textContent = `
     .ads-sf-container {
         background: rgba(0, 0, 0, 0.3);
         display: flex;
@@ -17,64 +17,50 @@
       }
       
       .ads-sf-container > .ads-sf {
-        animation: animateBackground linear  180s infinite;
         background: #264653;
         height: 100%;
         width: 970px;
       }
-      .ads-sf-container > .ads-sf.paused,  .ads-sf-container > .ads-sf:hover{
-        animation-play-state: paused !important;
-      }
-      
-      @keyframes animateBackground {
-        0% {
-          background: #264653;
-        }
-      
-        25% {
-          background: #2a9d8f;
-        }
-      
-        50% {
-          background: #e9c46a;
-        }
-      
-        75% {
-          background: #e76f51;
-        }
-      
-        100% {
-          background: #264653;
-        }
-      }      
     `
-    const wrapperDiv = document.createElement('div');
-    const animatedDiv = document.createElement('div');
+  const wrapperDiv = document.createElement('div');
+  const animatedDiv = document.createElement('div');
 
-    wrapperDiv.classList.add('ads-sf-container')
-    animatedDiv.classList.add('ads-sf')
+  wrapperDiv.classList.add('ads-sf-container')
+  animatedDiv.classList.add('ads-sf')
+
+  let colors = ['#264653', '#2a9d8f', '#e9c46a', '#e76f51',]
+  let activeColor = 0
+  let timer = 0
+  let interval;
+  const createinterval = () => {
+
+    interval = setInterval(() => {
+      if (timer > 30) {
+        timer = 0
+        activeColor = activeColor + 1 === colors.length ? 0 : activeColor + 1
+        animatedDiv.style.backgroundColor = colors[activeColor]
+      }
+      else timer++
+    }, 1000)
+  }
 
 
-
-    const visibilityListener = () => {
-        switch(document.visibilityState) {
-            case "hidden":
-                console.log('paused')
-                animatedDiv.classList.add('paused')
-              break;
-            case "visible":
-                console.log('resumed')
-                animatedDiv.classList.remove('paused')
-
-
-              break;
-          }
-        
+  const visibilityListener = () => {
+    switch (document.visibilityState) {
+      case "hidden":
+        clearInterval(interval)
+        break;
+      case "visible":
+        createinterval()
+        break;
     }
-    document.head.appendChild(styleTag)
-    wrapperDiv.appendChild(animatedDiv)
-    document.body.appendChild(wrapperDiv)
 
-    document.addEventListener("visibilitychange", visibilityListener);
+  }
+  document.head.appendChild(styleTag)
+  wrapperDiv.appendChild(animatedDiv)
+  document.body.appendChild(wrapperDiv)
+
+  document.addEventListener("visibilitychange", visibilityListener);
+  createinterval()
 
 })()

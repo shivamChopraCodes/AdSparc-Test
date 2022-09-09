@@ -2,14 +2,16 @@
 JS Animation Wrapper is an IIFE function for showing a footer in web page with color switching animation
 
 ##Working
-Animation is initialized inside a style tag and appeneded into DOM using JS.
+CSS for classes are declared inside a style tag and this style tag is appeneded into DOM using JS.
 
-User interactivity is tracked using visibilitychange event which has satus either hidden or visible, depending upon user's interaction with tab. 
+User interactivity is tracked using visibilitychange event which has status either hidden or visible, depending upon user's interaction with browser's tab. 
 
 The code is build using webpack in production mode and served on CDN.
 
-The color of footer changes in span of 30 secs linearly.
+The color of footer is changed using an interval for one second initalized on page mount.
 
-Animation is paused if user has minimized or navigated away from browser tab and animation gets resumed if user arrives back to the web page.
+Interval is cleared if user has minimized or navigated away from browser tab, but timer values is saved and a new interval gets initialized if user arrives back to the web page, hence increasing value of timer.
 
-URL for the hosted webpage : https://gregarious-unicorn-d9d87a.netlify.app/
+Timer is rest to 0, once it's value crosses 30. As timer resets, active color is also changed.
+
+URL for the hosted webpage : https://631b7e99ce733f009466e09e--melodic-cupcake-e153ac.netlify.app/
