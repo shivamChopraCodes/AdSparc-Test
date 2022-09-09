@@ -22,6 +22,9 @@
         height: 100%;
         width: 970px;
       }
+      .ads-sf-container > .ads-sf.paused,  .ads-sf-container > .ads-sf:hover{
+        animation-play-state: paused !important;
+      }
       
       @keyframes animateBackground {
         0% {
@@ -57,12 +60,12 @@
         switch(document.visibilityState) {
             case "hidden":
                 console.log('paused')
-                animatedDiv.style.animationPlayState = 'paused'
+                animatedDiv.classList.add('paused')
               break;
             case "visible":
                 console.log('resumed')
+                animatedDiv.classList.remove('paused')
 
-                animatedDiv.style.animationPlayState = 'running'
 
               break;
           }
